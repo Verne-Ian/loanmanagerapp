@@ -20,50 +20,46 @@ class MyHome extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Expanded(
-              child: Icon(
-                Icons.account_circle,
-                size: 120.0,
-              ),
+            Icon(
+              Icons.account_circle,
+              size: 120.0,
             ),
+            Divider(height: 70.0,),
             const Padding(
               padding: EdgeInsets.all(8.0),
-              child: Expanded(
-                child: Text(
-                  "Username",
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold
-                  )
+              child: Text(
+                "Username",
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold
+                )
 
-                ),
               ),
             ),
             const Padding(
               padding: EdgeInsets.all(8.0),
-              child: Expanded(child: Text(
+              child: Text(
                   "Password",
                   style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold
                   )
-              )),
+              ),
             ),
-            Expanded(
-              child: FloatingActionButton(onPressed: () {
-                runApp(const MaterialApp(
-                  home: signup()
-                ));
-
-              },
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 0.0),
+              child: ElevatedButton( onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const signup()),
+                );},
               child: const Text(
                 "Sign Up",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 12.0
-
                 ),
               ),
               ),
@@ -99,7 +95,7 @@ class signup extends StatelessWidget {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children:  [
           Text(
             "First Name"
           ),
@@ -148,7 +144,18 @@ class signup extends StatelessWidget {
                 border: UnderlineInputBorder(),
                 labelText: "Enter your current."
             ),
-          )
+          ),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(onPressed: (){
+                  Navigator.pop(context);
+                },
+                    child: Icon(
+                      Icons.home
+                    ) )
+              ],
+            ),
         ],
       ),
 
