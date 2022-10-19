@@ -145,14 +145,23 @@ class signup extends StatelessWidget {
                 labelText: "Enter your current."
             ),
           ),
+          SizedBox(height: 70.0,),
           Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(onPressed: (){
                   Navigator.pop(context);
                 },
                     child: Icon(
-                      Icons.home
+                      Icons.home,
+
+                    ),style: ButtonStyle(
+                  ), ),
+                ElevatedButton(onPressed: (){
+
+                },
+                    child: Icon(
+                        Icons.save_alt
                     ) )
               ],
             ),
