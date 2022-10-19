@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: MyHome()
   ));
 }
@@ -12,7 +12,7 @@ class MyHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Loan Management Center",
         ),
         centerTitle: true,
@@ -22,14 +22,14 @@ class MyHome extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Expanded(
+            const Expanded(
               child: Icon(
                 Icons.account_circle,
                 size: 120.0,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Expanded(
                 child: Text(
                   "Username",
@@ -41,8 +41,8 @@ class MyHome extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Expanded(child: Text(
                   "Password",
                   style: TextStyle(
@@ -53,12 +53,12 @@ class MyHome extends StatelessWidget {
             ),
             Expanded(
               child: FloatingActionButton(onPressed: () {
-                runApp(MaterialApp(
+                runApp(const MaterialApp(
                   home: signup()
                 ));
 
               },
-              child: Text(
+              child: const Text(
                 "Sign Up",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -82,8 +82,75 @@ class signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.lightBlue,
+        title: const Text(
+          "New User Registration",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 23.0,
+            color: Colors.amber,
 
-
+          ),
+        ),
+        centerTitle: true,
+        elevation: 0.0,
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          Text(
+            "First Name"
+          ),
+          TextField(
+            decoration: InputDecoration(
+              border: UnderlineInputBorder(),
+              hintText: "Enter first name.",
+            ),
+          ),
+          SizedBox(height: 15.0,),
+          Text(
+              "Last Name"
+          ),
+          TextField(
+            decoration: InputDecoration(
+                border: UnderlineInputBorder(),
+                hintText: "Enter last name."
+            ),
+          ),
+          SizedBox(height: 15.0,),
+          Text(
+              "Phone number:"
+          ),
+          TextField(
+            decoration: InputDecoration(
+                border: UnderlineInputBorder(),
+                hintText: "Enter phone number."
+            ),
+          ),
+          SizedBox(height: 15.0,),
+          Text(
+              "Email: "
+          ),
+          TextField(
+            decoration: InputDecoration(
+                border: UnderlineInputBorder(),
+                hintText: "Enter your email."
+            ),
+          ),
+          SizedBox(height: 15.0,),
+          Text(
+              "Address: "
+          ),
+          TextField(
+            decoration: InputDecoration(
+                border: UnderlineInputBorder(),
+                hintText: "Enter your current."
+            ),
+          )
+        ],
+      ),
 
     );
   }
