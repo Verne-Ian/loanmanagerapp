@@ -106,7 +106,7 @@ class signup extends StatelessWidget {
           TextField(
             decoration: InputDecoration(
               border: UnderlineInputBorder(),
-              hintText: "Enter first name.",
+              labelText: "Enter first name.",
             ),
           ),
           SizedBox(height: 15.0,),
@@ -116,7 +116,7 @@ class signup extends StatelessWidget {
           TextField(
             decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: "Enter last name."
+                labelText: "Enter last name."
             ),
           ),
           SizedBox(height: 15.0,),
@@ -126,7 +126,7 @@ class signup extends StatelessWidget {
           TextField(
             decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: "Enter phone number."
+                labelText: "Enter phone number."
             ),
           ),
           SizedBox(height: 15.0,),
@@ -136,7 +136,7 @@ class signup extends StatelessWidget {
           TextField(
             decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: "Enter your email."
+                labelText: "Enter your email."
             ),
           ),
           SizedBox(height: 15.0,),
@@ -146,7 +146,7 @@ class signup extends StatelessWidget {
           TextField(
             decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                hintText: "Enter your current."
+                labelText: "Enter your current."
             ),
           )
         ],
