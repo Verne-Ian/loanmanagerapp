@@ -22,11 +22,11 @@ class MyHome extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.account_circle,
               size: 120.0,
             ),
-            Divider(height: 70.0,),
+            const Divider(height: 70.0,),
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
@@ -96,71 +96,71 @@ class signup extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children:  [
-          Text(
+          const Text(
             "First Name"
           ),
-          TextField(
+          const TextField(
             decoration: InputDecoration(
               border: UnderlineInputBorder(),
               labelText: "Enter first name.",
             ),
           ),
-          SizedBox(height: 15.0,),
-          Text(
+          const SizedBox(height: 15.0,),
+          const Text(
               "Last Name"
           ),
-          TextField(
+          const TextField(
             decoration: InputDecoration(
                 border: UnderlineInputBorder(),
                 labelText: "Enter last name."
             ),
           ),
-          SizedBox(height: 15.0,),
-          Text(
+          const SizedBox(height: 15.0,),
+          const Text(
               "Phone number:"
           ),
-          TextField(
+          const TextField(
             decoration: InputDecoration(
                 border: UnderlineInputBorder(),
                 labelText: "Enter phone number."
             ),
           ),
-          SizedBox(height: 15.0,),
-          Text(
+          const SizedBox(height: 15.0,),
+          const Text(
               "Email: "
           ),
-          TextField(
+          const TextField(
             decoration: InputDecoration(
                 border: UnderlineInputBorder(),
                 labelText: "Enter your email."
             ),
           ),
-          SizedBox(height: 15.0,),
-          Text(
+          const SizedBox(height: 15.0,),
+          const Text(
               "Address: "
           ),
-          TextField(
+          const TextField(
             decoration: InputDecoration(
                 border: UnderlineInputBorder(),
                 labelText: "Enter your current."
             ),
           ),
-          SizedBox(height: 70.0,),
+          const SizedBox(height: 70.0,),
           Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(onPressed: (){
                   Navigator.pop(context);
-                },
-                    child: Icon(
+                },style: const ButtonStyle(
+                  ),
+                    child: const Icon(
                       Icons.home,
 
-                    ),style: ButtonStyle(
-                  ), ),
+                    ), ),
                 ElevatedButton(onPressed: (){
 
                 },
-                    child: Icon(
+                    child: const Icon(
                         Icons.save_alt
                     ) )
               ],
