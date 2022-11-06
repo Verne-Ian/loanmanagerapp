@@ -104,7 +104,7 @@ class signup extends StatelessWidget {
           "New User Registration",
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 23.0,
+            fontSize: 15.0,
             color: Colors.amber,
 
           ),
