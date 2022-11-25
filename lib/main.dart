@@ -9,10 +9,10 @@ void main() {
     debugShowCheckedModeBanner: false,
     initialRoute: '/',
     routes: {
-      '/': (context) => Loader(),
-      '/home': (context) => MyHome(),
-      '/login': (context) => defLogin(),
-      '/register': (context) => signup()
+      '/': (context) => const Loader(),
+      '/home': (context) => const MyHome(),
+      '/login': (context) => const defLogin(),
+      '/register': (context) => const signup()
     },
   ));
 }
