@@ -1,21 +1,21 @@
 class User{
-  var id;
-  var fname;
-  var lname;
-  var phone;
+  var ID;
+  var first_name;
+  var last_name;
+  var phone_no;
   var email;
-  var address;
+  var local_address;
 
-  User({this.id, this.fname, this.lname, this.phone, this.email, this.address});
+  User({this.ID, this.first_name, this.last_name, this.phone_no, this.email, this.local_address});
 
   factory User.fromJson(Map<String, dynamic>json){
     return User(
-      id: json['ID'] as int,
-      fname: json['first_name'] as String,
-      lname: json['last_name'] as String,
-      phone: json['phone_no'] as int,
+      ID: json['ID'] as int,
+      first_name: json['first_name'] as String,
+      last_name: json['last_name'] as String,
+      phone_no: json['phone_no'] as int,
       email: json['email'] as String,
-      address: json['local_address'] as String
+      local_address: json['local_address'] as String
     );
   }
 

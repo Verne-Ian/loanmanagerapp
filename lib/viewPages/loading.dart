@@ -15,7 +15,10 @@ class _LoaderState extends State<Loader> with TickerProviderStateMixin {
     String url = "http://localhost/LoanApp/Control.php";
     Response response = await get(Uri.parse(url));
     print(response.body);
-    Navigator.pushReplacementNamed(context, '/home');
+    Future.delayed(const Duration(seconds: 4), (){
+      Navigator.pushReplacementNamed(context, '/home');
+    });
+
 
   }
   @override
@@ -26,13 +29,26 @@ class _LoaderState extends State<Loader> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.black87,
       body: Center(
-        child: SpinKitSquareCircle(
-        color: Colors.red,
-        size: 50.0,
-      ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SpinKitCubeGrid(
+            color: Colors.orange,
+            size: 30.0,
+            ),
+            const SizedBox(height: 2.0),
+            Text(
+              'Starting App',
+              style: TextStyle(
+                color: Colors.orange[200],
+                fontSize: 10.0,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

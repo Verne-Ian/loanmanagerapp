@@ -22,15 +22,15 @@ class Service{
   }
 
   //This will add the users on Registration.
-  static Future<String> addUser(String fname, String lname, int phone, String email, String address) async{
+  static Future<String> addUser(String first_name, String last_name, String phone_no, String email, String local_address) async{
     try{
       var map = Map<String, dynamic>();
       map['action'] = REGISTER_ACTION;
-      map['first_name'] = fname;
-      map['last_name'] = lname;
-      map['phone_no'] = phone;
+      map['first_name'] = first_name;
+      map['last_name'] = last_name;
+      map['phone_no'] = phone_no;
       map['email'] = email;
-      map['local_address'] = address;
+      map['local_address'] = local_address;
       final response = await http.post(Uri.parse(ROOT), body: map);
       print('addUser Response: ${response.body}');
       if(200 == response.statusCode){

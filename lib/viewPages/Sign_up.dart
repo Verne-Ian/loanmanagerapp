@@ -29,23 +29,24 @@ class _signupState extends State<signup> {
 
   }
   addTable(){
-
+    Service.createTable().then((result){
+      if("Success." == result){
+        print('Table Created!');
+      }
+    });
   }
   addUsers(){
     if(_fnameController.text.isEmpty || _lnameController.text.isEmpty || _phoneController.text.isEmpty
         || _emailController.text.isEmpty || _addressController.text.isEmpty){
       print('Some fields are empty!');
-      return;
-    }else{
-      Service.addUser(_fnameController.text, _lnameController.text, int.parse(_phoneController.text),
+    }
+      Service.addUser(_fnameController.text, _lnameController.text, _phoneController.text,
         _emailController.text, _addressController.text).then((result){
 
-          if('Success' == result){
-
+          if('Action was Successful.' == result){
+            clearFields();
           }
-          clearFields();
       });
-    }
 
   }
   clearFields(){
@@ -177,7 +178,9 @@ class _signupState extends State<signup> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
-                        child: ElevatedButton.icon(onPressed: (){},
+                        child: ElevatedButton.icon(onPressed: (){
+                          addUsers();
+                        },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.grey[300],
                               elevation: 0.0,
@@ -199,7 +202,9 @@ class _signupState extends State<signup> {
                 Row(
                   children: [
                     Expanded(
-                      child: ElevatedButton.icon(onPressed: (){},
+                      child: ElevatedButton.icon(onPressed: (){
+                        addTable();
+                      },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.grey[300],
                             elevation: 0.0,
