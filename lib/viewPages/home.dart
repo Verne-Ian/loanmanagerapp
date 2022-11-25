@@ -25,7 +25,7 @@ class _MyHomeState extends State<MyHome> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 10.0),
                     child: Text(
-                      'Loan Manager Center',
+                      'Loan Management Center',
                       style: TextStyle(
                           fontSize: 13.0,
                           fontWeight: FontWeight.bold,
@@ -52,18 +52,18 @@ class _MyHomeState extends State<MyHome> {
                   style: ElevatedButton.styleFrom(
                       elevation: 0.0,
                       backgroundColor: Colors.blueGrey,
-                      fixedSize: Size(70.0, 40.0),
+                      fixedSize: const Size(70.0, 40.0),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0)
                       )
                   ),
-                  child: Text(
+                  child: const Text(
                     'Login',
                     style: TextStyle(
                         fontSize: 20.0
                     ),),),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(onPressed: () {
@@ -72,12 +72,12 @@ class _MyHomeState extends State<MyHome> {
                   style: ElevatedButton.styleFrom(
                       elevation: 0.0,
                       backgroundColor: Colors.grey[600],
-                      fixedSize: Size(70.0, 40.0),
+                      fixedSize: const Size(70.0, 40.0),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0)
                       )
                   ),
-                  child: Text(
+                  child: const Text(
                     'Register',
                     style: TextStyle(
                         fontSize: 20.0

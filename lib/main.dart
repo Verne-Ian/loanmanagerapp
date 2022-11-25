@@ -7,7 +7,7 @@ import 'viewPages/Login.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/home',
+    initialRoute: '/',
     routes: {
       '/': (context) => Loader(),
       '/home': (context) => MyHome(),
