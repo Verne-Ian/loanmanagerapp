@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'Sign_up.dart';
 
@@ -6,9 +8,59 @@ class defLogin extends StatefulWidget {
 
   @override
   State<defLogin> createState() => _defLoginState();
+
 }
 
 class _defLoginState extends State<defLogin> {
+  final _unameController = TextEditingController();
+  final _passController = TextEditingController();
+
+  Future Login() async{
+
+    String uname = _unameController.text;
+    String pass = _passController.text;
+    String url = 'http://localhost/LoanApp/User.php';
+
+    // Store all data with Param Name.
+    var data = {'username': uname, 'password' : pass};
+
+    // Starting Web API Call.
+    var response = await http.post(Uri.parse(url), body: json.encode(data));
+
+    // Getting Server response into variable.
+    var message = jsonDecode(response.body);
+
+    if(message == 'Logged in')
+    {
+      // Navigate to Profile Screen & Sending Email to Next Screen.
+      Navigator.pushNamed(context, '/home');
+
+    }else{
+
+      // If Email or Password did not Matched.
+      // Showing Alert Dialog with Response JSON Message.
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(message),
+            actions: <Widget>[
+              ElevatedButton(onPressed: () {
+                Navigator.of(context).pop();
+              },
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );}
+
+  }
+  @override
+  void initState(){
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +87,7 @@ class _defLoginState extends State<defLogin> {
                 const Divider(height: 70.0,),
                 const SizedBox(height: 15.0,),
                 TextField(
+                  controller: _unameController,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -52,6 +105,8 @@ class _defLoginState extends State<defLogin> {
                 ),
                 const SizedBox(height: 15.0,),
                 TextField(
+                  controller: _passController,
+                  obscureText: true,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15)
@@ -73,10 +128,8 @@ class _defLoginState extends State<defLogin> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0.0, 20.0, 3.0, 0.0),
                       child: ElevatedButton( onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const signup()),
-                        );},
+                        Login();
+                        },
                         style: ElevatedButton.styleFrom(
                           shape: const StadiumBorder(
                             side: BorderSide(color: Colors.transparent)
@@ -130,5 +183,10 @@ class _defLoginState extends State<defLogin> {
       ),
 
     );
+  }
+}
+class details{
+  user_details() {
+
   }
 }

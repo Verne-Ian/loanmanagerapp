@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'users.dart';
 
@@ -22,7 +23,8 @@ class Service{
   }
 
   //This will add the users on Registration.
-  static Future<String> addUser(String first_name, String last_name, String phone_no, String email, String local_address) async{
+  static Future<String> addUser(String first_name, String last_name, String phone_no, String email, String local_address,
+      String username, String pass) async{
     try{
       var map = Map<String, dynamic>();
       map['action'] = REGISTER_ACTION;
@@ -31,6 +33,8 @@ class Service{
       map['phone_no'] = phone_no;
       map['email'] = email;
       map['local_address'] = local_address;
+      map['username'] = username;
+      map['pass'] = pass;
       final response = await http.post(Uri.parse(ROOT), body: map);
       print('addUser Response: ${response.body}');
       if(200 == response.statusCode){
