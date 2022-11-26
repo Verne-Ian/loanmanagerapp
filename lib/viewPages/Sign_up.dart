@@ -16,6 +16,9 @@ class _signupState extends State<signup> {
   late TextEditingController _phoneController;
   late TextEditingController _emailController;
   late TextEditingController _addressController;
+  late TextEditingController _newPassController;
+  late TextEditingController _conPassController;
+  late TextEditingController _userController;
 
 
   @override
@@ -26,6 +29,9 @@ class _signupState extends State<signup> {
     _phoneController = TextEditingController();
     _emailController = TextEditingController();
     _addressController = TextEditingController();
+    _newPassController = TextEditingController();
+    _conPassController = TextEditingController();
+    _userController = TextEditingController();
 
   }
   addTable(){
@@ -38,15 +44,52 @@ class _signupState extends State<signup> {
   addUsers(){
     if(_fnameController.text.isEmpty || _lnameController.text.isEmpty || _phoneController.text.isEmpty
         || _emailController.text.isEmpty || _addressController.text.isEmpty){
-      print('Some fields are empty!');
-    }
-      Service.addUser(_fnameController.text, _lnameController.text, _phoneController.text,
-        _emailController.text, _addressController.text).then((result){
+      var message = ("Some fields are empty!");
 
-          if('Action was Successful.' == result){
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(message),
+            actions: <Widget>[
+              ElevatedButton(onPressed: () {
+                Navigator.of(context).pop();
+              },
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+
+    }else if(_conPassController.text != _newPassController.text){
+
+    }else{
+      Service.addUser(_fnameController.text, _lnameController.text, _phoneController.text,
+        _emailController.text, _addressController.text,_userController.text ,_conPassController.text).then((result){
+
+          var success = "Success";
+
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(success),
+              actions: <Widget>[
+                ElevatedButton(onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                  child: Text("OK"),
+                ),
+              ],
+            );
+          },
+        );
+          if('Successful' == result){
             clearFields();
           }
       });
+    }
 
   }
   clearFields(){
@@ -55,6 +98,9 @@ class _signupState extends State<signup> {
     _phoneController.text = '';
     _emailController.text = '';
     _addressController.text = '';
+    _userController.text = '';
+    _newPassController.text = '';
+    _conPassController.text = '';
   }
 
   @override
@@ -153,6 +199,62 @@ class _signupState extends State<signup> {
                           fontSize: 10
                       ),
                       contentPadding: const EdgeInsets.all(10)
+                  ),
+                ),
+                const SizedBox(height: 15.0,),
+                TextField(
+                  controller: _userController,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15)
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.account_circle,
+                        size: 15.0,
+                      ),
+                      labelText: "Username",
+                      hintText: "ian255",
+                      hintStyle: const TextStyle(
+                          fontSize: 10
+                      )
+                  ),
+                ),
+                const SizedBox(height: 15.0,),
+                TextField(
+                  obscureText: true,
+                  controller: _newPassController,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15)
+                      ),
+                      prefixIcon: const Icon(
+                          Icons.password,
+                          size: 15.0
+                      ),
+                      labelText: "New Password",
+                      hintText: "Minimum 8 Characters..",
+                      hintStyle: const TextStyle(
+                          fontSize: 10
+                      )
+                  ),
+                ),
+                const SizedBox(height: 15.0,),
+                TextField(
+                  obscureText: true,
+                  controller: _conPassController,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15)
+                      ),
+                      prefixIcon: const Icon(
+                          Icons.password,
+                          size: 15.0
+                      ),
+                      labelText: "Confirm Password",
+                      hintText: "Make sure passwords match...",
+                      hintStyle: const TextStyle(
+                          fontSize: 10
+                      )
                   ),
                 ),
                 const SizedBox(height: 15.0,),
