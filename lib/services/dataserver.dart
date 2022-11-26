@@ -18,7 +18,7 @@ class Service{
     print('Create Table Response: ${response.body}');
     return response.body;
   }catch(e){
-      return "Error!";
+      return "Errors!";
     }
   }
 
