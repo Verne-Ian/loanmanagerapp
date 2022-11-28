@@ -66,7 +66,7 @@ class _signupState extends State<signup> {
 
     }else{
       Service.addUser(_fnameController.text, _lnameController.text, _phoneController.text,
-        _emailController.text, _addressController.text,_userController.text ,_conPassController.text).then((result){
+        _emailController.text, _addressController.text,_userController.text ,_conPassController.text,"user").then((result){
 
           var success = "Success";
 

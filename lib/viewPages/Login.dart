@@ -15,45 +15,63 @@ class _defLoginState extends State<defLogin> {
   final _unameController = TextEditingController();
   final _passController = TextEditingController();
 
-  Future Login() async{
+  Future<List> login() async {
 
-    String uname = _unameController.text;
-    String pass = _passController.text;
-    String url = 'http://localhost/LoanApp/User.php';
+    String msg;
+    const login = 'http://localhost/LoanApp/User.php';
+    final response = await http.post(Uri.parse(login), body: {
+      "username": _unameController.text,
+      "password": _passController.text,
 
-    // Store all data with Param Name.
-    var data = {'username': uname, 'password' : pass};
+    });
 
-    // Starting Web API Call.
-    var response = await http.post(Uri.parse(url), body: json.encode(data));
+    var user = json.decode(response.body);
 
-    // Getting Server response into variable.
-    var message = jsonDecode(response.body);
+    if(user.length==0){
+      setState(() {
+        msg="Invalid username and password!";
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(msg,style: const TextStyle(
+                  fontSize: 12.0
+              ),),
+              icon: const Icon(Icons.warning_amber_outlined,
+                size: 30.0,),
+              actions: <Widget>[
+                ElevatedButton(onPressed: () {
+                  Navigator.of(context).pop();
+                  clearFields();
+                },
+                  child: const Text("OK",style: TextStyle(
+                      fontSize: 12.0
+                  ),),
+                ),
+              ],
+            );
+          },
+        );
+      });
+    }else if((user[0]['username'] == _unameController.text.toString()) || (user[0]['pass'] ==_passController.text.toString())){
+      if(user[0]['level']=='admin'){
+        Navigator.pushReplacementNamed(context, '/admin', arguments:_unameController.text.toString());
+      }else if(user[0]['level']=='user'){
+        Navigator.pushReplacementNamed(context, '/user');
+      }
 
-    if(message == 'Logged in')
-    {
-      // Navigate to Profile Screen & Sending Email to Next Screen.
-      Navigator.pushNamed(context, '/home');
+      /*setState(() {
+      username= datauser[0]['username'];
+    });*/
 
-    }else{
+    }
 
-      // If Email or Password did not Matched.
-      // Showing Alert Dialog with Response JSON Message.
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(message),
-            actions: <Widget>[
-              ElevatedButton(onPressed: () {
-                Navigator.of(context).pop();
-              },
-                child: Text("OK"),
-              ),
-            ],
-          );
-        },
-      );}
+    return user;
+
+  }
+  clearFields(){
+    _unameController.text = '';
+    _passController.text = '';
 
   }
   @override
@@ -90,7 +108,7 @@ class _defLoginState extends State<defLogin> {
                   controller: _unameController,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       prefixIcon: const Icon(
                         Icons.account_circle,
@@ -128,11 +146,11 @@ class _defLoginState extends State<defLogin> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0.0, 20.0, 3.0, 0.0),
                       child: ElevatedButton( onPressed: () {
-                        Login();
-                        },
+                        login();
+                      },
                         style: ElevatedButton.styleFrom(
                           shape: const StadiumBorder(
-                            side: BorderSide(color: Colors.transparent)
+                              side: BorderSide(color: Colors.transparent)
                           ),
                         ),
                         child: const Text(
@@ -160,6 +178,7 @@ class _defLoginState extends State<defLogin> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.grey[300],
                             elevation: 0.0,
+                            shadowColor: Colors.grey[300],
                             shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                           ),
                           child: const Text(
@@ -167,7 +186,7 @@ class _defLoginState extends State<defLogin> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12.0,
-                              color: Colors.black
+                                color: Colors.black
                             ),
                           ),
                         ),
@@ -183,10 +202,5 @@ class _defLoginState extends State<defLogin> {
       ),
 
     );
-  }
-}
-class details{
-  user_details() {
-
   }
 }

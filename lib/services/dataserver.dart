@@ -8,6 +8,8 @@ class Service{
   static const CREATE_TABLE_ACTION = 'CREATE_TABLE';
   static const REGISTER_ACTION = 'new_user';
   static const VIEW_ACTION = 'GET_REC';
+  static const Users_ACTION = 'Get_users';
+  static const DEL_User = 'delete_user';
 
   //This will create the user table in to the database.
   static Future<String> createTable() async {
@@ -24,7 +26,7 @@ class Service{
 
   //This will add the users on Registration.
   static Future<String> addUser(String first_name, String last_name, String phone_no, String email, String local_address,
-      String username, String pass) async{
+      String username, String pass, String lev) async{
     try{
       var map = Map<String, dynamic>();
       map['action'] = REGISTER_ACTION;
@@ -47,4 +49,44 @@ class Service{
     }
 
   }
+  static Future<List<User>> getUsers() async{
+    try{
+      var map = Map<String, dynamic>();
+      map['action'] = Users_ACTION;
+      final response = await http.post(Uri.parse(ROOT), body: map);
+      print("Get users: ${response.body}");
+
+      if(200 == response.statusCode){
+        List<User> list = parseResponse(response.body);
+        return list;
+      }else{
+        return <User>[];
+      }
+    }catch(p){
+      return <User>[];
+    }
+  }
+  static List<User> parseResponse(String responseBody){
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+    return parsed.map<User>((json)=>User.fromJson(json)).toList();
+  }
+  static Future<String> deleteUser(String userId) async{
+    try{
+      var map = Map<String, dynamic>();
+      map['action'] = DEL_User;
+      map['userId'] = userId;
+      final response = await http.post(Uri.parse(ROOT), body: map);
+      print('Delete action: ${response.body}');
+
+      if(200 == response.statusCode){
+        return response.body;
+      }else{
+        return "Error!";
+      }
+
+    }catch(p){
+      return "Error!";
+    }
+  }
+
 }
