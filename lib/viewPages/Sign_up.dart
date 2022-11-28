@@ -62,15 +62,13 @@ class _signupState extends State<signup> {
         },
       );
 
-    }else if(_conPassController.text != _newPassController.text){
-
     }else{
+      String lev = "user";
       Service.addUser(_fnameController.text, _lnameController.text, _phoneController.text,
-        _emailController.text, _addressController.text,_userController.text ,_conPassController.text).then((result){
+        _emailController.text, _addressController.text,_userController.text ,_conPassController.text, lev).then((result){
 
           var success = "Success";
-
-        showDialog(
+          showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
@@ -78,6 +76,7 @@ class _signupState extends State<signup> {
               actions: <Widget>[
                 ElevatedButton(onPressed: () {
                   Navigator.of(context).pop();
+                  clearFields();
                 },
                   child: Text("OK"),
                 ),
@@ -184,6 +183,7 @@ class _signupState extends State<signup> {
                 ),
                 const SizedBox(height: 15.0,),
                 TextField(
+                  keyboardType: TextInputType.emailAddress,
                   controller: _emailController,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(

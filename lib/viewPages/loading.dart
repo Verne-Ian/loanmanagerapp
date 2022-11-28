@@ -12,7 +12,7 @@ class Loader extends StatefulWidget {
 class _LoaderState extends State<Loader> with TickerProviderStateMixin {
   void getConn() async{
 
-    String url = "http://localhost/LoanApp/Control.php";
+    String url = "http://localhost/LoanApp/conn.php";
     Response response = await get(Uri.parse(url));
     print(response.body);
     Future.delayed(const Duration(seconds: 4), (){
