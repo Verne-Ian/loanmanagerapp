@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loanmanagerapp/services/dataserver.dart';
+import 'package:http/http.dart';
 
 
 class signup extends StatefulWidget {
@@ -21,6 +21,93 @@ class _signupState extends State<signup> {
   late TextEditingController _userController;
 
 
+  void newTable() async {
+    Response response = await post(Uri.parse('http://localhost/LoanApp/TableCreate.php'));
+    String reply = response.body;
+    print(reply);
+    if(1050 == response.statusCode){
+      print("Table Exists");
+    }
+
+  }
+  addTable() {
+    newTable();
+    }
+
+  Future<String> adduser(String fname, String lname, var phone, String email, String locAdd, String uname, var pass) async{
+    var map = <String, dynamic>{};
+    map['first_name'] = fname;
+    map['last_name'] = lname;
+    map['phone_no'] = phone;
+    map['email'] = email;
+    map['local_address'] = locAdd;
+    map['uname'] = uname;
+    map['pass'] = pass;
+
+    final response = await post(Uri.parse('http://localhost/LoanApp/addUser.php'), body: map);
+
+    if(200 == response.statusCode){
+      return response.body;
+    }else{
+      print("Error");
+    }
+    return response.body;
+  }
+
+  addUsers(){
+    if((_newPassController.text == _conPassController.text) & _fnameController.text.isNotEmpty & _lnameController.text.isNotEmpty & _phoneController.text.isNotEmpty &
+    _emailController.text.isNotEmpty & _addressController.text.isNotEmpty & _userController.text.isNotEmpty){
+      adduser(_fnameController.text, _lnameController.text, _phoneController.text,
+          _emailController.text, _addressController.text, _userController.text, _conPassController.text).then((result){
+            if("Done" == result){
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Done"),
+                    actions: <Widget>[
+                      ElevatedButton(onPressed: () {
+                        clearFields();
+                        Navigator.pushReplacementNamed(context, '/login');
+                      },
+                        child: const Text("OK"),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+      });}
+    else{
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Some fields are Empty!"),
+            actions: <Widget>[
+              ElevatedButton(onPressed: () {
+                Navigator.of(context).pop();
+              },
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  clearFields(){
+    _fnameController.text = '';
+    _lnameController.text = '';
+    _phoneController.text = '';
+    _emailController.text = '';
+    _addressController.text = '';
+    _userController.text = '';
+    _newPassController.text = '';
+    _conPassController.text = '';
+  }
+
   @override
   void initState(){
     super.initState();
@@ -34,74 +121,7 @@ class _signupState extends State<signup> {
     _userController = TextEditingController();
 
   }
-  addTable(){
-    Service.createTable().then((result){
-      if("Success." == result){
-        print('Table Created!');
-      }
-    });
-  }
-  addUsers(){
-    if(_fnameController.text.isEmpty || _lnameController.text.isEmpty || _phoneController.text.isEmpty
-        || _emailController.text.isEmpty || _addressController.text.isEmpty){
-      var message = ("Some fields are empty!");
 
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(message),
-            actions: <Widget>[
-              ElevatedButton(onPressed: () {
-                Navigator.of(context).pop();
-              },
-                child: Text("OK"),
-              ),
-            ],
-          );
-        },
-      );
-
-    }else if(_conPassController.text != _newPassController.text){
-
-    }else{
-      Service.addUser(_fnameController.text, _lnameController.text, _phoneController.text,
-        _emailController.text, _addressController.text,_userController.text ,_conPassController.text,"user").then((result){
-
-          var success = "Success";
-
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(success),
-              actions: <Widget>[
-                ElevatedButton(onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                  child: Text("OK"),
-                ),
-              ],
-            );
-          },
-        );
-          if('Successful' == result){
-            clearFields();
-          }
-      });
-    }
-
-  }
-  clearFields(){
-    _fnameController.text = '';
-    _lnameController.text = '';
-    _phoneController.text = '';
-    _emailController.text = '';
-    _addressController.text = '';
-    _userController.text = '';
-    _newPassController.text = '';
-    _conPassController.text = '';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -305,7 +325,8 @@ class _signupState extends State<signup> {
                   children: [
                     Expanded(
                       child: ElevatedButton.icon(onPressed: (){
-                        addTable();
+                       addTable();
+                       null;
                       },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.grey[300],

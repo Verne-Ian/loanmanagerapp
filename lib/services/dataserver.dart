@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'users.dart';
 
 class Service{
@@ -8,53 +8,34 @@ class Service{
   static const CREATE_TABLE_ACTION = 'CREATE_TABLE';
   static const REGISTER_ACTION = 'new_user';
   static const VIEW_ACTION = 'GET_REC';
+  static const Update = 'update_user';
   static const Users_ACTION = 'Get_users';
   static const DEL_User = 'delete_user';
 
-  //This will create the user table in to the database.
-  static Future<String> createTable() async {
-    try{
-    var map = Map<String, dynamic>();
-    map['action'] = CREATE_TABLE_ACTION;
-    final response = await http.post(Uri.parse(ROOT), body: map);
-    print('Create Table Response: ${response.body}');
-    return response.body;
-  }catch(e){
-      return "Errors!";
-    }
-  }
 
-  //This will add the users on Registration.
-  static Future<String> addUser(String first_name, String last_name, String phone_no, String email, String local_address,
-      String username, String pass, String lev) async{
+  //This will create the user table in to the database.
+  /*static Future<String> newTable() async {
     try{
       var map = Map<String, dynamic>();
-      map['action'] = REGISTER_ACTION;
-      map['first_name'] = first_name;
-      map['last_name'] = last_name;
-      map['phone_no'] = phone_no;
-      map['email'] = email;
-      map['local_address'] = local_address;
-      map['username'] = username;
-      map['pass'] = pass;
-      final response = await http.post(Uri.parse(ROOT), body: map);
-      print('addUser Response: ${response.body}');
+      map['action'] = CREATE_TABLE_ACTION;
+      Response response = await http.post(Uri.parse(ROOT), body: map);
+      print(response.body);
       if(200 == response.statusCode){
         return response.body;
       }else{
-        return "Error!";
+        return "Error";
       }
-    }catch(e){
-      return "Error!";
+    }catch(p){
+      return 'Error';
     }
 
-  }
-  static Future<List<User>> getUsers() async{
+  }*/
+  static Future<List<User>> getUser() async {
     try{
-      var map = Map<String, dynamic>();
-      map['action'] = Users_ACTION;
-      final response = await http.post(Uri.parse(ROOT), body: map);
-      print("Get users: ${response.body}");
+      var map = <String, dynamic>{};
+
+      final response = await post(Uri.parse('http://localhost/LoanApp/allUsers.php'),body: map);
+      print('Get Users: ${response.body}');
 
       if(200 == response.statusCode){
         List<User> list = parseResponse(response.body);
@@ -62,31 +43,83 @@ class Service{
       }else{
         return <User>[];
       }
+
     }catch(p){
       return <User>[];
     }
   }
-  static List<User> parseResponse(String responseBody){
-    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+
+  static List<User> parseResponse(String body) {
+    final parsed = jsonDecode(body).cast<Map<String, dynamic>>();
     return parsed.map<User>((json)=>User.fromJson(json)).toList();
   }
-  static Future<String> deleteUser(String userId) async{
+
+  static Future<String> addUser(var first_name, var last_name, int phone_no, var email, var local_address, var uname, var password) async{
     try{
-      var map = Map<String, dynamic>();
-      map['action'] = DEL_User;
-      map['userId'] = userId;
+      var map = <String, dynamic>{};
+      map['action'] = REGISTER_ACTION;
+      map['first_name'] = first_name;
+      map['last_name'] = last_name;
+      map['phone_no'] = phone_no;
+      map['email'] = email;
+      map['local_address'] = local_address;
+      map['uname'] = uname;
+      map['pass'] = password;
+
       final response = await http.post(Uri.parse(ROOT), body: map);
-      print('Delete action: ${response.body}');
+      print('Add Users: ${response.body}');
 
       if(200 == response.statusCode){
         return response.body;
       }else{
-        return "Error!";
+        return "Error";
       }
-
     }catch(p){
-      return "Error!";
+      return "Error";
     }
   }
+  static Future<String> updater(var ID, var first_name, var last_name, int phone_no, var email, var local_address, var uname, var password, var lev) async{
+    try{
+      var map = <String, dynamic>{};
+      map['action'] = Update;
+      map['userId'] = ID;
+      map['first_name'] = first_name;
+      map['last_name'] = last_name;
+      map['phone_no'] = phone_no;
+      map['email'] = email;
+      map['local_address'] = local_address;
+      map['uname'] = uname;
+      map['pass'] = password;
+      map['ulevel'] = lev;
 
+      final response = await http.post(Uri.parse(ROOT), body: map);
+      print('Update User: ${response.body}');
+
+      if(200 == response.statusCode){
+        return response.body;
+      }else{
+        return "Error";
+      }
+    }catch(p){
+      return "Error";
+    }
+  }
+  static Future<String> deleter(var ID) async{
+    try{
+      var map = <String, dynamic>{};
+      map['action'] = DEL_User;
+      map['userId'] = ID;
+
+      final response = await http.post(Uri.parse(ROOT), body: map);
+      print('Update User: ${response.body}');
+
+      if(200 == response.statusCode){
+        return response.body;
+      }else{
+        return "Error";
+      }
+    }catch(p){
+      return "Error";
+    }
+  }
 }

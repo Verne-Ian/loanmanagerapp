@@ -21,7 +21,7 @@ class User{
       local_address: json['local_address'] as String,
       uname: json['username'] as String,
       password: json['pass'] as String,
-      lev: json['level'] as String
+      lev: json['ulevel'] as String
     );
   }
 

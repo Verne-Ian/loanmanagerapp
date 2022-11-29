@@ -54,9 +54,9 @@ class _defLoginState extends State<defLogin> {
         );
       });
     }else if((user[0]['username'] == _unameController.text.toString()) || (user[0]['pass'] ==_passController.text.toString())){
-      if(user[0]['level']=='admin'){
+      if(user[0]['ulevel']=='admin'){
         Navigator.pushReplacementNamed(context, '/admin', arguments:_unameController.text.toString());
-      }else if(user[0]['level']=='user'){
+      }else if(user[0]['ulevel']=='user'){
         Navigator.pushReplacementNamed(context, '/user');
       }
 

@@ -15,27 +15,21 @@ class _AdminHomeState extends State<AdminHome> {
   late User selectedUser;
   var uname;
 
-  myUsers(){
-    Service.getUsers().then((users){
-      setState(() {
-        _users = users;
-      });
-      print('Length is ${users.length}');
-    });
-  }
-  del_users(User user){
-    Service.deleteUser(user.ID).then((result){
-      if('Successful' == result){
-        myUsers();
-      }
-    });
+   getData() {
+     Service.getUser().then((users){
+       setState(() {
+         _users = users;
+       });
+       print("${users.length}");
+     });
   }
 
   @override
   void initState(){
     super.initState();
     _users = [];
-    myUsers();
+    getData();
+
   }
   @override
   Widget build(BuildContext context) {
@@ -57,27 +51,28 @@ class _AdminHomeState extends State<AdminHome> {
               DataColumn(label: Text('Email',style: TextStyle(color: Colors.white),)),
               DataColumn(label: Text('User_Level',style: TextStyle(color: Colors.white),))
             ],
-            rows: _users.map((users) => DataRow(cells: [
+            rows: _users.map(
+                    (user) => DataRow(cells: [
               DataCell(
-                  Text(users.ID)
+                  Text(user.ID)
               ),
               DataCell(
-                  Text(users.first_name.toUpperCase())
+                  Text(user.first_name)
               ),
               DataCell(
-                  Text(users.last_name.toUpperCase())
+                  Text(user.last_name)
               ),
               DataCell(
-                  Text(users.uname)
+                  Text(user.uname)
               ),
               DataCell(
-                  Text(users.phone_no.toString())
+                  Text(user.phone_no.toString())
               ),
               DataCell(
-                  Text(users.email)
+                  Text(user.email)
               ),
               DataCell(
-                  Text(users.lev)
+                  Text(user.lev)
               )
             ])).toList(),
           ),
