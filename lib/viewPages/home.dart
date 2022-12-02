@@ -39,7 +39,7 @@ class _MyHomeState extends State<MyHome> {
                 padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 10.0),
                 child: Icon(
                     Icons.account_balance,
-                    size: 90.0,
+                    size: 120.0,
                     color: Colors.orange[600]
                 ),
               ),

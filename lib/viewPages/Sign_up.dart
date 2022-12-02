@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:image_picker/image_picker.dart';
 
 
 class signup extends StatefulWidget {
@@ -43,7 +46,6 @@ class _signupState extends State<signup> {
     map['local_address'] = locAdd;
     map['uname'] = uname;
     map['pass'] = pass;
-
     final response = await post(Uri.parse('http://localhost/LoanApp/addUser.php'), body: map);
 
     if(200 == response.statusCode){
@@ -107,6 +109,18 @@ class _signupState extends State<signup> {
     _newPassController.text = '';
     _conPassController.text = '';
   }
+  final picker = ImagePicker();
+  late File _image;
+
+  Future selectedImage() async {
+
+    var selectedImage = await picker.pickImage(source: ImageSource.gallery);
+    setState((){
+      _image = File(selectedImage!.path);
+    });
+  }
+
+
 
   @override
   void initState(){
@@ -295,6 +309,62 @@ class _signupState extends State<signup> {
                       )
                   ),
                 ),
+                const SizedBox(height: 15.0),
+                Row(
+                  children: [
+                    Expanded(
+                        child: ElevatedButton.icon(onPressed: (){
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Add Picture."),
+                                actions: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      IconButton(onPressed: () {
+                                        selectedImage();
+                                      }, icon: const Icon(
+                                          Icons.add_a_photo
+                                      )),
+                                      ElevatedButton(onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.white,
+                                          elevation: 0.0,
+                                          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                                        ),
+                                        child: const Text('Cancel', style: TextStyle(
+                                          color: Colors.black
+                                        ),),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.grey[300],
+                              elevation: 0.0,
+                              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                            ),
+                            icon: const Icon(Icons.add,
+                              color: Colors.lightBlue,),
+                            label: Text(
+                              "Add Profile Picture",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12.0,
+                                  backgroundColor: Colors.grey[300]
+                              ),
+                            ))
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 30.0,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -319,35 +389,7 @@ class _signupState extends State<signup> {
                             ))
                     ),
                   ],
-                ),
-                const SizedBox(height: 20.0),
-                Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton.icon(onPressed: (){
-                       addTable();
-                       null;
-                      },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.grey[300],
-                            elevation: 0.0,
-                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                          ),
-                          icon: const Icon(Icons.add,
-                          color: Colors.lightBlue,),
-                          label: Text(
-                            "Add Table",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12.0,
-                              backgroundColor: Colors.grey[300]
-                            ),
-                          ))
-                      ),
-                  ],
-                )
-              ],
-            ),
+                ),]),
           ),
         ),
       ),

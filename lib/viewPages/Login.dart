@@ -99,7 +99,7 @@ class _defLoginState extends State<defLogin> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(
-                  Icons.account_circle,
+                  Icons.account_balance,
                   size: 120.0,
                 ),
                 const Divider(height: 70.0,),
@@ -182,7 +182,7 @@ class _defLoginState extends State<defLogin> {
                             shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                           ),
                           child: const Text(
-                            "Create An Account",
+                            "New User? Create An Account",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12.0,
