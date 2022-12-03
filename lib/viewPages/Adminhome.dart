@@ -295,13 +295,17 @@ class _AdminHomeState extends State<AdminHome> {
                                 },
                               );
                             },
-                            title: Padding(
-                              padding: const EdgeInsets.fromLTRB(4.0, 5.0, 2.0, 4.0),
-                              child: Text('${ulist[index]['first_name'].toUpperCase()} ${ulist[index]['last_name'].toUpperCase()}'),
+                            title: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(4.0, 5.0, 2.0, 4.0),
+                                child: Text('${ulist[index]['first_name'].toUpperCase()} ${ulist[index]['last_name'].toUpperCase()}'),
+                              ),
                             ),
-                            subtitle: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Text('${ulist[index]['phone_no']}  ${ulist[index]['email']}', style: const TextStyle(fontSize: 12.0),),
+                            subtitle: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text('${ulist[index]['phone_no']}  ${ulist[index]['email']}', style: const TextStyle(fontSize: 12.0),),
+                              ),
                             ),
                             leading: Padding(
                               padding: const EdgeInsets.all(8.0),

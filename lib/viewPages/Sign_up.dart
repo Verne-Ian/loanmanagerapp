@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 
@@ -66,9 +67,10 @@ class _signupState extends State<signup> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text("Done"),
+                    title: const Text("Done"),
                     actions: <Widget>[
                       ElevatedButton(onPressed: () {
+                        uploadPic();
                         clearFields();
                         Navigator.pushReplacementNamed(context, '/login');
                       },
@@ -118,6 +120,22 @@ class _signupState extends State<signup> {
     setState((){
       _image = File(selectedImage!.path);
     });
+  }
+  Future uploadPic() async{
+    final Url = Uri.parse('http://localhost/LoanApp/propic.php');
+    var request = http.MultipartRequest('POST', Url);
+    request.fields['uname'] = _userController.text;
+    var image = await http.MultipartFile.fromPath('proPic', _image.path);
+    request.files.add(image);
+
+    var response = await request.send();
+
+    if(response.statusCode == 200){
+      print('Image uploaded.');
+    }else{
+      print('Image not uploaded.');
+    }
+
   }
 
 
@@ -352,7 +370,7 @@ class _signupState extends State<signup> {
                               elevation: 0.0,
                               shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                             ),
-                            icon: const Icon(Icons.add,
+                            icon: const Icon(Icons.add_a_photo,
                               color: Colors.lightBlue,),
                             label: Text(
                               "Add Profile Picture",
