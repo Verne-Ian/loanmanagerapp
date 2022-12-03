@@ -87,12 +87,12 @@ class _signupState extends State<signup> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Some fields are Empty!"),
+            title: const Text("Some fields are Empty!"),
             actions: <Widget>[
               ElevatedButton(onPressed: () {
                 Navigator.of(context).pop();
               },
-                child: Text("OK"),
+                child: const Text("OK"),
               ),
             ],
           );
