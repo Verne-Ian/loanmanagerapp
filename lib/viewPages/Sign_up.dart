@@ -26,7 +26,7 @@ class _signupState extends State<signup> {
 
 
   void newTable() async {
-    Response response = await post(Uri.parse('http://localhost/LoanApp/TableCreate.php'));
+    Response response = await post(Uri.parse('http://192.168.43.31/LoanApp/TableCreate.php'));
     String reply = response.body;
     print(reply);
     if(1050 == response.statusCode){
@@ -47,7 +47,7 @@ class _signupState extends State<signup> {
     map['local_address'] = locAdd;
     map['uname'] = uname;
     map['pass'] = pass;
-    final response = await post(Uri.parse('http://localhost/LoanApp/addUser.php'), body: map);
+    final response = await post(Uri.parse('http://192.168.43.31/LoanApp/addUser.php'), body: map);
 
     if(200 == response.statusCode){
       return response.body;
@@ -75,12 +75,7 @@ class _signupState extends State<signup> {
                         Navigator.pushReplacementNamed(context, '/login');
                       },
                         child: const Text("OK"),
-                      ),
-                    ],
-                  );
-                },
-              );
-            }
+                      )]);});}
       });}
     else{
       showDialog(
@@ -93,11 +88,7 @@ class _signupState extends State<signup> {
                 Navigator.of(context).pop();
               },
                 child: const Text("OK"),
-              ),
-            ],
-          );
-        },
-      );
+              )]);});
     }
   }
 
@@ -122,7 +113,7 @@ class _signupState extends State<signup> {
     });
   }
   Future uploadPic() async{
-    final Url = Uri.parse('http://localhost/LoanApp/propic.php');
+    final Url = Uri.parse('http://192.168.43.31/LoanApp/propic.php');
     var request = http.MultipartRequest('POST', Url);
     request.fields['uname'] = _userController.text;
     var image = await http.MultipartFile.fromPath('proPic', _image.path);
@@ -167,9 +158,7 @@ class _signupState extends State<signup> {
             fontWeight: FontWeight.bold,
             fontSize: 15.0,
             color: Colors.amber,
-
-          ),
-        ),
+          )),
         centerTitle: true,
         elevation: 0.0,
       ),
@@ -195,9 +184,7 @@ class _signupState extends State<signup> {
                       hintText: "Enter first name.",
                       hintStyle: const TextStyle(
                           fontSize: 10
-                      )
-                  ),
-                ),
+                      ))),
                 const SizedBox(height: 15.0,),
                 TextField(
                   controller: _lnameController,
@@ -213,9 +200,7 @@ class _signupState extends State<signup> {
                       hintText: "Enter Last name.",
                       hintStyle: const TextStyle(
                           fontSize: 10
-                      )
-                  ),
-                ),
+                      ))),
                 const SizedBox(height: 15.0,),
                 TextField(
                   controller: _phoneController,
@@ -231,9 +216,7 @@ class _signupState extends State<signup> {
                       hintText: "+256xxxxxxxxx",
                       hintStyle: const TextStyle(
                           fontSize: 10
-                      )
-                  ),
-                ),
+                      ))),
                 const SizedBox(height: 15.0,),
                 TextField(
                   controller: _emailController,
@@ -251,8 +234,7 @@ class _signupState extends State<signup> {
                           fontSize: 10
                       ),
                       contentPadding: const EdgeInsets.all(10)
-                  ),
-                ),
+                  )),
                 const SizedBox(height: 15.0,),
                 TextField(
                   controller: _userController,
@@ -268,9 +250,7 @@ class _signupState extends State<signup> {
                       hintText: "ian255",
                       hintStyle: const TextStyle(
                           fontSize: 10
-                      )
-                  ),
-                ),
+                      ))),
                 const SizedBox(height: 15.0,),
                 TextField(
                   obscureText: true,
@@ -287,9 +267,7 @@ class _signupState extends State<signup> {
                       hintText: "Minimum 8 Characters..",
                       hintStyle: const TextStyle(
                           fontSize: 10
-                      )
-                  ),
-                ),
+                      ))),
                 const SizedBox(height: 15.0,),
                 TextField(
                   obscureText: true,
@@ -306,9 +284,7 @@ class _signupState extends State<signup> {
                       hintText: "Make sure passwords match...",
                       hintStyle: const TextStyle(
                           fontSize: 10
-                      )
-                  ),
-                ),
+                      ))),
                 const SizedBox(height: 15.0,),
                 TextField(
                   controller: _addressController,
@@ -324,9 +300,7 @@ class _signupState extends State<signup> {
                       hintText: "Physical address",
                       hintStyle: const TextStyle(
                           fontSize: 10
-                      )
-                  ),
-                ),
+                      ))),
                 const SizedBox(height: 15.0),
                 Row(
                   children: [
@@ -356,15 +330,7 @@ class _signupState extends State<signup> {
                                         ),
                                         child: const Text('Cancel', style: TextStyle(
                                           color: Colors.black
-                                        ),),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
+                                        )))])]);});},
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.grey[300],
                               elevation: 0.0,
@@ -378,11 +344,7 @@ class _signupState extends State<signup> {
                                   color: Colors.black,
                                   fontSize: 12.0,
                                   backgroundColor: Colors.grey[300]
-                              ),
-                            ))
-                    ),
-                  ],
-                ),
+                              ))))]),
                 const SizedBox(height: 30.0,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -403,15 +365,7 @@ class _signupState extends State<signup> {
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 15.0,
-                              ),
-                            ))
-                    ),
-                  ],
-                ),]),
-          ),
-        ),
-      ),
-
+                              ))))])]))))
     );
   }
 }

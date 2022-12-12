@@ -18,7 +18,7 @@ class _defLoginState extends State<defLogin> {
   Future<List> login() async {
 
     String msg;
-    const login = 'http://localhost/LoanApp/User.php';
+    const login = 'http://192.168.43.31/LoanApp/User.php';
     final response = await http.post(Uri.parse(login), body: {
       "username": _unameController.text,
       "password": _passController.text,
@@ -36,44 +36,31 @@ class _defLoginState extends State<defLogin> {
             return AlertDialog(
               title: Text(msg,style: const TextStyle(
                   fontSize: 12.0
-              ),),
+              )),
               icon: const Icon(Icons.warning_amber_outlined,
                 size: 30.0,),
               actions: <Widget>[
                 ElevatedButton(onPressed: () {
                   Navigator.of(context).pop();
                   clearFields();
-                },
+                  },
                   child: const Text("OK",style: TextStyle(
                       fontSize: 12.0
-                  ),),
-                ),
-              ],
-            );
-          },
-        );
-      });
+                  )))]);});});
     }else if((user[0]['username'] == _unameController.text.toString()) || (user[0]['pass'] ==_passController.text.toString())){
       if(user[0]['ulevel']=='admin'){
         Navigator.pushReplacementNamed(context, '/admin', arguments:_unameController.text.toString());
       }else if(user[0]['ulevel']=='user'){
-        Navigator.pushReplacementNamed(context, '/user');
+        Navigator.pushReplacementNamed(context, '/user', arguments: _unameController.text.toString());
       }
-
-      /*setState(() {
-      username= datauser[0]['username'];
-    });*/
-
     }
-
     return user;
-
   }
   clearFields(){
     _unameController.text = '';
     _passController.text = '';
-
   }
+
   @override
   void initState(){
     super.initState();
@@ -89,7 +76,6 @@ class _defLoginState extends State<defLogin> {
         ),
         backgroundColor: Colors.black87,
         centerTitle: true,
-
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -118,9 +104,7 @@ class _defLoginState extends State<defLogin> {
                       hintText: "Enter username.",
                       hintStyle: const TextStyle(
                           fontSize: 10
-                      )
-                  ),
-                ),
+                      ))),
                 const SizedBox(height: 15.0,),
                 TextField(
                   controller: _passController,
@@ -137,9 +121,7 @@ class _defLoginState extends State<defLogin> {
                       hintText: "Enter password",
                       hintStyle: const TextStyle(
                           fontSize: 10
-                      )
-                  ),
-                ),
+                      ))),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -151,19 +133,13 @@ class _defLoginState extends State<defLogin> {
                         style: ElevatedButton.styleFrom(
                           shape: const StadiumBorder(
                               side: BorderSide(color: Colors.transparent)
-                          ),
-                        ),
+                          )),
                         child: const Text(
                           "Login",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 12.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                          ))))]),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -187,20 +163,6 @@ class _defLoginState extends State<defLogin> {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12.0,
                                 color: Colors.black
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-              ],
-            ),
-          ),
-        ),
-      ),
-
-    );
+                            )))))])])))));
   }
 }

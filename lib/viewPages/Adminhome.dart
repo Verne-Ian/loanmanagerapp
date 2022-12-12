@@ -23,14 +23,15 @@ class _AdminHomeState extends State<AdminHome> {
   late TextEditingController _ulevelController;
 
   Future<dynamic> generateUsers() async {
-    // Give your sever URL of get_employees_details.php file
-    var url = 'http://localhost/LoanApp/allUsers.php';
+    // This function will contact the server for the json file containing the database table.
+    var url = 'http://192.168.43.31/LoanApp/allUsers.php';
     final response = await http.get(Uri.parse(url));
     var list = jsonDecode(response.body);
     return list;
   }
   Future<String> updater(var ID, var first_name, var last_name, var phone_no, var email, var local_address, var ulevel) async{
     try{
+      //This function will be used to update a given user in the database table.
       var map = <String, dynamic>{};
       map['userId'] = ID;
       map['first_name'] = first_name;
@@ -40,7 +41,7 @@ class _AdminHomeState extends State<AdminHome> {
       map['local_address'] = local_address;
       map['ulevel'] = ulevel;
 
-      final response = await http.post(Uri.parse('http://localhost/LoanApp/Updateuser.php'), body: map);
+      final response = await http.post(Uri.parse('http:///LoanApp/Updateuser.php'), body: map);
       print('Update User: ${response.body}');
 
       if(200 == response.statusCode){
@@ -54,15 +55,6 @@ class _AdminHomeState extends State<AdminHome> {
   }
 
   var uname;
-
-  /*getData() {
-     Service.getUser().then((users){
-       setState(() {
-         _users = users;
-       });
-       print("${users.length}");
-     });
-  }*/
 
   clear(){
     _addressController.text = '';
@@ -112,7 +104,7 @@ class _AdminHomeState extends State<AdminHome> {
                       fontSize: 12.0,
                       fontWeight: FontWeight.bold,
                       color: Colors.orange[50]
-                  ),
+                  )
                 ),
                 IconButton(onPressed: (){
                   setState(() {
@@ -121,9 +113,7 @@ class _AdminHomeState extends State<AdminHome> {
                 },
                     icon: const Icon(Icons.refresh_sharp),
                 tooltip: 'Reload',),
-              ],
-            )
-          ],
+              ])]
         ),
         body: Center(
           child: FutureBuilder(
@@ -164,8 +154,7 @@ class _AdminHomeState extends State<AdminHome> {
                                                   hintText: "Enter first name.",
                                                   hintStyle: const TextStyle(
                                                       fontSize: 10
-                                                  )
-                                              ),
+                                                  ))
                                             ),
                                             const SizedBox(height: 15.0,),
                                             TextField(
@@ -182,8 +171,7 @@ class _AdminHomeState extends State<AdminHome> {
                                                   hintText: "Enter Last name.",
                                                   hintStyle: const TextStyle(
                                                       fontSize: 10
-                                                  )
-                                              ),
+                                                  ))
                                             ),
                                             const SizedBox(height: 15.0,),
                                             TextField(
@@ -200,8 +188,7 @@ class _AdminHomeState extends State<AdminHome> {
                                                   hintText: "+256xxxxxxxxx",
                                                   hintStyle: const TextStyle(
                                                       fontSize: 10
-                                                  )
-                                              ),
+                                                  ))
                                             ),
                                             const SizedBox(height: 15.0,),
                                             TextField(
@@ -220,7 +207,7 @@ class _AdminHomeState extends State<AdminHome> {
                                                       fontSize: 10
                                                   ),
                                                   contentPadding: const EdgeInsets.all(10)
-                                              ),
+                                              )
                                             ),
                                             const SizedBox(height: 15.0,),
                                             TextField(
@@ -237,8 +224,7 @@ class _AdminHomeState extends State<AdminHome> {
                                                   hintText: "Physical address",
                                                   hintStyle: const TextStyle(
                                                       fontSize: 10
-                                                  )
-                                              ),
+                                                  ))
                                             ),
                                             const SizedBox(height: 15.0,),
                                             TextField(
@@ -255,8 +241,7 @@ class _AdminHomeState extends State<AdminHome> {
                                                   hintText: "Admin or User",
                                                   hintStyle: const TextStyle(
                                                       fontSize: 10
-                                                  )
-                                              ),
+                                                  ))
                                             ),
                                             const SizedBox(height: 15.0),
                                             Row(
@@ -283,33 +268,22 @@ class _AdminHomeState extends State<AdminHome> {
                                                   ),
                                                   child: const Text('Done', style: TextStyle(
                                                       color: Colors.black
-                                                  ),),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              );
+                                                  ))
+                                                )])])]));});
                             },
                             title: Center(
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(4.0, 5.0, 2.0, 4.0),
                                 child: Text('${ulist[index]['first_name'].toUpperCase()} ${ulist[index]['last_name'].toUpperCase()}'),
-                              ),
-                            ),
+                              )),
                             subtitle: Center(
                               child: Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: Text('${ulist[index]['phone_no']}  ${ulist[index]['email']}', style: const TextStyle(fontSize: 12.0),),
-                              ),
-                            ),
+                              )),
                             leading: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text('User ID: ${ulist[index]['ID']}'),
+                              child: Text('${ulist[index]['ID']}'),
                             ),
                             trailing: CircleAvatar(
                               backgroundColor: Colors.white,
@@ -321,21 +295,13 @@ class _AdminHomeState extends State<AdminHome> {
                                     });
                                 });
                               }, icon: const Icon(Icons.delete)),
-                            ),
-
-                          ),
-                        ),
-                      ),
+                            )))),
                     );
                   }):const Center(
                 child: SpinKitCircle(
                   color: Colors.orange,
                   size: 30.0,
-                ),
-              );
-            },
-          ),
-        )
+                ));}))
     );
   }
 }

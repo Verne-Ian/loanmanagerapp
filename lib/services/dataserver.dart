@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class Service{
-  static const ROOT = 'http://localhost/LoanApp/Control.php';
+  static const ROOT = 'http://192.168.43.31/LoanApp/Control.php';
 
   static Future<String> updater(var ID, var first_name, var last_name, var phone_no, var email, var local_address, var ulevel) async{
     try{
@@ -14,7 +14,7 @@ class Service{
       map['local_address'] = local_address;
       map['ulevel'] = ulevel;
 
-      final response = await http.post(Uri.parse('http://localhost/LoanApp/Updateuser.php'), body: map);
+      final response = await http.post(Uri.parse('http://192.168.43.31/LoanApp/Updateuser.php'), body: map);
       print('Update User: ${response.body}');
 
       if(200 == response.statusCode){
@@ -31,7 +31,7 @@ class Service{
       var map = <String, dynamic>{};
       map['userId'] = ID;
 
-      final response = await http.post(Uri.parse('http://localhost/LoanApp/delUser.php'), body: map);
+      final response = await http.post(Uri.parse('http://192.168.43.31/LoanApp/delUser.php'), body: map);
       print('Delete User: ${response.body}');
       if(200 == response.statusCode){
         return response.body;

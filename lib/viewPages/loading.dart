@@ -12,9 +12,10 @@ class Loader extends StatefulWidget {
 class _LoaderState extends State<Loader> with TickerProviderStateMixin {
   void getConn() async{
 
-    String url = "http://localhost/LoanApp/conn.php";
+    String url = "http://192.168.43.31/LoanApp/conn.php";
     Response response = await get(Uri.parse(url));
     Future.delayed(const Duration(seconds: 4), (){
+      //This will load the home page after showing the loading screen.
       Navigator.pushReplacementNamed(context, '/home');
     });
 
