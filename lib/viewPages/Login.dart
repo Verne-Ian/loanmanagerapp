@@ -17,6 +17,9 @@ class _defLoginState extends State<defLogin> {
 
   Future<List> login() async {
 
+    //const login_act = 'login';
+    //var map = <String, dynamic>{};
+    //map['action'] = login_act;
     String msg;
     const login = 'http://192.168.43.31/LoanApp/User.php';
     final response = await http.post(Uri.parse(login), body: {

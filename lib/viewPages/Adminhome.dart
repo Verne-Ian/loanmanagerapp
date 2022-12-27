@@ -22,36 +22,14 @@ class _AdminHomeState extends State<AdminHome> {
   late TextEditingController _addressController;
   late TextEditingController _ulevelController;
 
+//static const url = 'http://192.168.43.31/LoanApp/actions.php';
+
   Future<dynamic> generateUsers() async {
     // This function will contact the server for the json file containing the database table.
     var url = 'http://192.168.43.31/LoanApp/allUsers.php';
     final response = await http.get(Uri.parse(url));
     var list = jsonDecode(response.body);
     return list;
-  }
-  Future<String> updater(var ID, var first_name, var last_name, var phone_no, var email, var local_address, var ulevel) async{
-    try{
-      //This function will be used to update a given user in the database table.
-      var map = <String, dynamic>{};
-      map['userId'] = ID;
-      map['first_name'] = first_name;
-      map['last_name'] = last_name;
-      map['phone_no'] = phone_no;
-      map['email'] = email;
-      map['local_address'] = local_address;
-      map['ulevel'] = ulevel;
-
-      final response = await http.post(Uri.parse('http:///LoanApp/Updateuser.php'), body: map);
-      print('Update User: ${response.body}');
-
-      if(200 == response.statusCode){
-        return response.body;
-      }else{
-        return "Error";
-      }
-    }catch(p){
-      return "Error";
-    }
   }
 
   var uname;
@@ -247,16 +225,27 @@ class _AdminHomeState extends State<AdminHome> {
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                               children: [
-                                                IconButton(onPressed: () {
+                                                ElevatedButton.icon(
+                                                    onPressed: (){
                                                   Service.updater(ulist[index]['ID'], _fnameController.text, _lnameController.text, _phoneController.text,
                                                       _emailController.text, _addressController.text, _ulevelController.text).then((result) {
                                                     clear();
                                                     Navigator.of(context).pop();
-                                                  });
-                                                }, icon: const Icon(
-                                                    Icons.update
-                                                ),
-                                                tooltip: 'Update',),
+                                                  });},
+                                                    icon: const Icon(
+                                                    Icons.update,
+                                                color: Colors.green,),
+                                                    label: const Text(
+                                                      'Update',
+                                                      style: TextStyle(
+                                                        color: Colors.black
+                                                      ),
+                                                    ),
+                                                    style: ElevatedButton.styleFrom(
+                                                      backgroundColor: Colors.white,
+                                                      elevation: 0.0,
+                                                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                                                    )),
                                                 ElevatedButton(onPressed: () {
                                                   generateUsers();
                                                   Navigator.of(context).pop();
@@ -276,14 +265,13 @@ class _AdminHomeState extends State<AdminHome> {
                                 padding: const EdgeInsets.fromLTRB(4.0, 5.0, 2.0, 4.0),
                                 child: Text('${ulist[index]['first_name'].toUpperCase()} ${ulist[index]['last_name'].toUpperCase()}'),
                               )),
-                            subtitle: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Text('${ulist[index]['phone_no']}  ${ulist[index]['email']}', style: const TextStyle(fontSize: 12.0),),
-                              )),
+                            subtitle: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text('${ulist[index]['phone_no']} \n ${ulist[index]['email']}', style: const TextStyle(fontSize: 12.0),),
+                            ),
                             leading: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text('${ulist[index]['ID']}'),
+                              child: Text('${ulist[index]['picture']}'),
                             ),
                             trailing: CircleAvatar(
                               backgroundColor: Colors.white,
@@ -298,7 +286,7 @@ class _AdminHomeState extends State<AdminHome> {
                             )))),
                     );
                   }):const Center(
-                child: SpinKitCircle(
+                child: SpinKitFadingCube(
                   color: Colors.orange,
                   size: 30.0,
                 ));}))

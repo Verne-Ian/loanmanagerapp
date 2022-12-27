@@ -1,9 +1,7 @@
-import 'dart:io';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
+import '';
 
 
 class signup extends StatefulWidget {
@@ -26,7 +24,7 @@ class _signupState extends State<signup> {
 
 
   void newTable() async {
-    Response response = await post(Uri.parse('http://192.168.43.31/LoanApp/TableCreate.php'));
+    Response response = await post(Uri.parse('http://192.168.43.31/LoanApp/actions.php'));
     String reply = response.body;
     print(reply);
     if(1050 == response.statusCode){
@@ -39,7 +37,9 @@ class _signupState extends State<signup> {
     }
 
   Future<String> adduser(String fname, String lname, var phone, String email, String locAdd, String uname, var pass) async{
+    //const add_user = 'add_user';
     var map = <String, dynamic>{};
+    //map['action'] = add_user;
     map['first_name'] = fname;
     map['last_name'] = lname;
     map['phone_no'] = phone;
@@ -70,9 +70,8 @@ class _signupState extends State<signup> {
                     title: const Text("Done"),
                     actions: <Widget>[
                       ElevatedButton(onPressed: () {
-                        uploadPic();
                         clearFields();
-                        Navigator.pushReplacementNamed(context, '/login');
+                        Navigator.pushReplacementNamed(context, '/ProPic', arguments: _userController.text.toString());
                       },
                         child: const Text("OK"),
                       )]);});}
@@ -101,32 +100,6 @@ class _signupState extends State<signup> {
     _userController.text = '';
     _newPassController.text = '';
     _conPassController.text = '';
-  }
-  final picker = ImagePicker();
-  late File _image;
-
-  Future selectedImage() async {
-
-    var selectedImage = await picker.pickImage(source: ImageSource.gallery);
-    setState((){
-      _image = File(selectedImage!.path);
-    });
-  }
-  Future uploadPic() async{
-    final Url = Uri.parse('http://192.168.43.31/LoanApp/propic.php');
-    var request = http.MultipartRequest('POST', Url);
-    request.fields['uname'] = _userController.text;
-    var image = await http.MultipartFile.fromPath('proPic', _image.path);
-    request.files.add(image);
-
-    var response = await request.send();
-
-    if(response.statusCode == 200){
-      print('Image uploaded.');
-    }else{
-      print('Image not uploaded.');
-    }
-
   }
 
 
@@ -162,210 +135,166 @@ class _signupState extends State<signup> {
         centerTitle: true,
         elevation: 0.0,
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children:  [
-                const SizedBox(height: 15.0,),
-                TextField(
-                  controller: _fnameController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.account_circle,
-                        size: 15.0,
-                      ),
-                      labelText: "First name",
-                      hintText: "Enter first name.",
-                      hintStyle: const TextStyle(
-                          fontSize: 10
-                      ))),
-                const SizedBox(height: 15.0,),
-                TextField(
-                  controller: _lnameController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.account_circle,
-                        size: 15.0,
-                      ),
-                      labelText: "Last name",
-                      hintText: "Enter Last name.",
-                      hintStyle: const TextStyle(
-                          fontSize: 10
-                      ))),
-                const SizedBox(height: 15.0,),
-                TextField(
-                  controller: _phoneController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.phone,
-                        size: 15.0,
-                      ),
-                      labelText: "Phone number",
-                      hintText: "+256xxxxxxxxx",
-                      hintStyle: const TextStyle(
-                          fontSize: 10
-                      ))),
-                const SizedBox(height: 15.0,),
-                TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      prefixIcon: const Icon(
-                          Icons.alternate_email,
-                          size: 15.0
-                      ),
-                      labelText: "Email",
-                      hintText: "you@example.com",
-                      hintStyle: const TextStyle(
-                          fontSize: 10
-                      ),
-                      contentPadding: const EdgeInsets.all(10)
-                  )),
-                const SizedBox(height: 15.0,),
-                TextField(
-                  controller: _userController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.account_circle,
-                        size: 15.0,
-                      ),
-                      labelText: "Username",
-                      hintText: "ian255",
-                      hintStyle: const TextStyle(
-                          fontSize: 10
-                      ))),
-                const SizedBox(height: 15.0,),
-                TextField(
-                  obscureText: true,
-                  controller: _newPassController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      prefixIcon: const Icon(
-                          Icons.password,
-                          size: 15.0
-                      ),
-                      labelText: "New Password",
-                      hintText: "Minimum 8 Characters..",
-                      hintStyle: const TextStyle(
-                          fontSize: 10
-                      ))),
-                const SizedBox(height: 15.0,),
-                TextField(
-                  obscureText: true,
-                  controller: _conPassController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      prefixIcon: const Icon(
-                          Icons.password,
-                          size: 15.0
-                      ),
-                      labelText: "Confirm Password",
-                      hintText: "Make sure passwords match...",
-                      hintStyle: const TextStyle(
-                          fontSize: 10
-                      ))),
-                const SizedBox(height: 15.0,),
-                TextField(
-                  controller: _addressController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      prefixIcon: const Icon(
-                          Icons.local_post_office,
-                          size: 15.0
-                      ),
-                      labelText: "Address",
-                      hintText: "Physical address",
-                      hintStyle: const TextStyle(
-                          fontSize: 10
-                      ))),
-                const SizedBox(height: 15.0),
-                Row(
-                  children: [
-                    Expanded(
-                        child: ElevatedButton.icon(onPressed: (){
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Add Picture."),
-                                actions: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      IconButton(onPressed: () {
-                                        selectedImage();
-                                      }, icon: const Icon(
-                                          Icons.add_a_photo
-                                      )),
-                                      ElevatedButton(onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white,
-                                          elevation: 0.0,
-                                          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                                        ),
-                                        child: const Text('Cancel', style: TextStyle(
-                                          color: Colors.black
-                                        )))])]);});},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.grey[300],
-                              elevation: 0.0,
-                              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                            ),
-                            icon: const Icon(Icons.add_a_photo,
-                              color: Colors.lightBlue,),
-                            label: Text(
-                              "Add Profile Picture",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12.0,
-                                  backgroundColor: Colors.grey[300]
-                              ))))]),
-                const SizedBox(height: 30.0,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                        child: ElevatedButton.icon(onPressed: (){
-                          addUsers();
-                        },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.grey[300],
-                              elevation: 0.0,
-                              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                            ),
-                            icon: const Icon(Icons.check,
-                              color: Colors.green,),
-                            label: const Text(
-                              "Done",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15.0,
-                              ))))])]))))
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children:  [
+              const SizedBox(height: 15.0,),
+              TextField(
+                controller: _fnameController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.account_circle,
+                      size: 15.0,
+                    ),
+                    labelText: "First name",
+                    hintText: "Enter first name.",
+                    hintStyle: const TextStyle(
+                        fontSize: 10
+                    ))),
+              const SizedBox(height: 15.0,),
+              TextField(
+                controller: _lnameController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.account_circle,
+                      size: 15.0,
+                    ),
+                    labelText: "Last name",
+                    hintText: "Enter Last name.",
+                    hintStyle: const TextStyle(
+                        fontSize: 10
+                    ))),
+              const SizedBox(height: 15.0,),
+              TextField(
+                keyboardType: TextInputType.phone,
+                controller: _phoneController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.phone,
+                      size: 15.0,
+                    ),
+                    labelText: "Phone number",
+                    hintText: "+256xxxxxxxxx",
+                    hintStyle: const TextStyle(
+                        fontSize: 10
+                    ))),
+              const SizedBox(height: 15.0,),
+              TextField(
+                keyboardType: TextInputType.emailAddress,
+                controller: _emailController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    prefixIcon: const Icon(
+                        Icons.alternate_email,
+                        size: 15.0
+                    ),
+                    labelText: "Email",
+                    hintText: "you@example.com",
+                    hintStyle: const TextStyle(
+                        fontSize: 10
+                    ),
+                    contentPadding: const EdgeInsets.all(10)
+                )),
+              const SizedBox(height: 15.0,),
+              TextField(
+                controller: _userController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.account_circle,
+                      size: 15.0,
+                    ),
+                    labelText: "Username",
+                    hintText: "ian255",
+                    hintStyle: const TextStyle(
+                        fontSize: 10
+                    ))),
+              const SizedBox(height: 15.0,),
+              TextField(
+                obscureText: true,
+                controller: _newPassController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    prefixIcon: const Icon(
+                        Icons.password,
+                        size: 15.0
+                    ),
+                    labelText: "New Password",
+                    hintText: "Minimum 8 Characters..",
+                    hintStyle: const TextStyle(
+                        fontSize: 10
+                    ))),
+              const SizedBox(height: 15.0,),
+              TextField(
+                obscureText: true,
+                controller: _conPassController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    prefixIcon: const Icon(
+                        Icons.password,
+                        size: 15.0
+                    ),
+                    labelText: "Confirm Password",
+                    hintText: "Make sure passwords match...",
+                    hintStyle: const TextStyle(
+                        fontSize: 10
+                    ))),
+              const SizedBox(height: 15.0,),
+              TextField(
+                controller: _addressController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    prefixIcon: const Icon(
+                        Icons.local_post_office,
+                        size: 15.0
+                    ),
+                    labelText: "Address",
+                    hintText: "Physical address",
+                    hintStyle: const TextStyle(
+                        fontSize: 10
+                    ))),
+              const SizedBox(height: 30.0,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                      child: ElevatedButton.icon(onPressed: (){
+                        addUsers();
+                      },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey[300],
+                            elevation: 0.0,
+                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                          ),
+                          icon: const Icon(Icons.arrow_right_outlined,
+                            color: Colors.green,),
+                          label: const Text(
+                            "Next",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15.0,
+                            ))))])])))
     );
   }
 }

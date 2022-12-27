@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loanmanagerapp/viewPages/addProfilePic.dart';
 import 'viewPages/Adminhome.dart';
 import 'viewPages/Userhome.dart';
 import 'viewPages/loading.dart';
@@ -16,7 +17,8 @@ void main() {
       '/login': (context) => const defLogin(),
       '/register': (context) => const signup(),
       '/admin': (context) => const AdminHome(),
-      '/user': (context) => const UserHome()
+      '/user': (context) => const UserHome(),
+      '/ProPic': (context) => const ProfilePic()
     },
   ));
 }
