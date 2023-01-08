@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>863250666733-lo0d8ql07nsjoi9aoo4ttucvksp274is.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.863250666733-lo0d8ql07nsjoi9aoo4ttucvksp274is</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBWX4P47h0r1MwrZYygtMfRsChe1yl5xjM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>863250666733</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.vernetech.loanmanagerapp</string>
+	<key>PROJECT_ID</key>
+	<string>loanapp-1b8ae</string>
+	<key>STORAGE_BUCKET</key>
+	<string>loanapp-1b8ae.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:863250666733:ios:fb9d313a0b77be697168e4</string>
+</dict>
+</plist>

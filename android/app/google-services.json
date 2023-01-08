@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "863250666733",
+    "project_id": "loanapp-1b8ae",
+    "storage_bucket": "loanapp-1b8ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863250666733:android:8645db85dc587d317168e4",
+        "android_client_info": {
+          "package_name": "com.vernetech.loanmanagerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863250666733-beqlu4n9be1ji0jn60d66s9a954o7roc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJLv6_nT3ErJtWgM4xTJ1mFQ_kzOdzLDc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863250666733-beqlu4n9be1ji0jn60d66s9a954o7roc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
