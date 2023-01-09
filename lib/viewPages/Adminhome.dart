@@ -1,8 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:loanmanagerapp/services/dataserver.dart';
 
+import '../Addons/buttons&fields.dart';
 import '../Addons/side_profile.dart';
 
 
@@ -20,31 +19,27 @@ class _AdminHomeState extends State<AdminHome> {
   late TextEditingController _lnameController;
   late TextEditingController _phoneController;
   late TextEditingController _emailController;
-  late TextEditingController _addressController;
-  late TextEditingController _ulevelController;
+  late TextEditingController _amountController;
 
 //static const url = 'http://192.168.43.31/LoanApp/actions.php';
 
   var User_Name;
 
   clear(){
-    _addressController.text = '';
+    _amountController.text = '';
     _emailController.text = '';
     _phoneController.text = '';
     _lnameController.text = '';
     _fnameController.text ='';
-    _ulevelController.text = '';
   }
   @override
   void initState() {
     super.initState();
-    Service.getLoans();
     _fnameController = TextEditingController();
     _lnameController = TextEditingController();
     _phoneController = TextEditingController();
     _emailController = TextEditingController();
-    _addressController = TextEditingController();
-    _ulevelController = TextEditingController();
+    _amountController = TextEditingController();
     //getData();
 
   }
@@ -52,6 +47,10 @@ class _AdminHomeState extends State<AdminHome> {
   @override
   Widget build(BuildContext context) {
     User_Name = ModalRoute.of(context)!.settings.arguments;
+
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+
 
     return Scaffold(
         backgroundColor: Colors.grey[300],
@@ -71,7 +70,7 @@ class _AdminHomeState extends State<AdminHome> {
             Row(
               children: [
                 Text(
-                  'Current Users',
+                  'Refresh',
                   style: TextStyle(
                       fontSize: 12.0,
                       fontWeight: FontWeight.bold,
@@ -87,48 +86,28 @@ class _AdminHomeState extends State<AdminHome> {
                 tooltip: 'Reload',),
               ])]
         ),
-        body: FutureBuilder(
-          future: Service.getLoans(),
-          builder: (context, snapshot){
-            if (snapshot.hasError) {
-            if (kDebugMode) {
-              print(snapshot.error);
-            }
-            }
-            return snapshot.hasData ? ListView.builder(
-              itemCount: snapshot.data.length,
-                itemBuilder: (context, index){
-                  List ulist = snapshot.data;
-                  return Card(
-                    margin: const EdgeInsets.all(5.0),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(2.0, 5.0, 2.0, 3.0),
-                      child: ListTile(
-                        onTap: null,
-                        title: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(4.0, 5.0, 2.0, 4.0),
-                            child: Text('${ulist[index]['first_name'].toUpperCase()} ${ulist[index]['last_name'].toUpperCase()}'),
-                          )),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text('${ulist[index]['phone_no']} \n ${ulist[index]['email']}', style: const TextStyle(fontSize: 12.0),),
-                        ),
-                        leading: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('${ulist[index]['picture']}'),
-                        ),
-                        trailing: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: IconButton(
-                              onPressed: (){},
-                              icon: const Icon(Icons.delete)),
-                        ))));
-                }):const Center(
-              child: SpinKitFadingCube(
-                color: Colors.orange,
-                size: 30.0,
-              ));})
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: width * 0.03, right: width * 0.03, top: height * 0.1),
+                child: Container(
+                  child: Column(
+                    children: [
+                      defaultField(
+                          'Enter Amount',
+                          Icons.currency_exchange_sharp,
+                          true, _amountController, 'UGX'),
+
+
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        )
     );
   }
 }

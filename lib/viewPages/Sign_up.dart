@@ -1,8 +1,8 @@
-import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../Addons/buttons&fields.dart';
 
 
 class signup extends StatefulWidget {
@@ -29,7 +29,8 @@ class _signupState extends State<signup> {
       FirebaseAuth.instance.createUserWithEmailAndPassword(
                 email: _emailController.text,
                 password: _conPassController.text).then((value){
-                  Navigator.pushReplacementNamed(context, '/admin');
+                  Navigator.pushReplacementNamed(context, '/admin',
+                      arguments: FirebaseAuth.instance.currentUser?.email);
             }).onError((error, stackTrace){
 
               if (kDebugMode) {
@@ -229,27 +230,28 @@ class _signupState extends State<signup> {
                         fontSize: 10
                     ))),
               const SizedBox(height: 30.0,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                      child: ElevatedButton.icon(onPressed: (){
-                        addUsers();
-                      },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.grey[300],
-                            elevation: 0.0,
-                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                          ),
-                          icon: const Icon(Icons.arrow_right_outlined,
-                            color: Colors.green,
-                          size: 35.0,),
-                          label: const Text(
-                            "Continue",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                            ))))])])))
+              loginSignUpButton(context, false, (){ addUsers(); }),
+              haveAccountOption()
+            ])))
     );
   }
+
+  Row haveAccountOption(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text('Already have an account?',
+            style: TextStyle(color: Colors.black)),
+        GestureDetector(
+          onTap: () {
+            Navigator.pushReplacementNamed(context, '/login');
+          },
+          child: const Text('Log In',
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        )
+      ],
+    );
+
+  }
+
 }

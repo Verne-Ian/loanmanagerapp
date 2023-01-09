@@ -1,8 +1,8 @@
-import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
-import 'Sign_up.dart';
+import '../Addons/buttons&fields.dart';
 
 class defLogin extends StatefulWidget {
   const defLogin({Key? key}) : super(key: key);
@@ -21,7 +21,8 @@ class _defLoginState extends State<defLogin> {
     FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text,
         password: _passController.text).then((value){
-          Navigator.pushReplacementNamed(context, '/admin');
+          Navigator.pushReplacementNamed(context, '/admin',
+              arguments: FirebaseAuth.instance.currentUser?.email);
 
     }).onError((error, stackTrace){
 
@@ -68,7 +69,7 @@ class _defLoginState extends State<defLogin> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(
-                  Icons.account_balance,
+                  Icons.account_box_outlined,
                   size: 120.0,
                 ),
                 const Divider(height: 70.0,),
@@ -105,45 +106,27 @@ class _defLoginState extends State<defLogin> {
                       hintStyle: const TextStyle(
                           fontSize: 10
                       ))),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 20.0, 3.0, 0.0),
-                      child: ElevatedButton( onPressed: login,
-                        style: ElevatedButton.styleFrom(
-                          shape: const StadiumBorder(
-                              side: BorderSide(color: Colors.transparent)
-                          )),
-                        child: const Text(
-                          "Login",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12.0,
-                          ))))]),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 0.0),
-                        child: ElevatedButton( onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const signup()),
-                          );},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.grey[300],
-                            elevation: 0.0,
-                            shadowColor: Colors.grey[300],
-                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                          ),
-                          child: const Text(
-                            "New User? Create An Account",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12.0,
-                                color: Colors.black
-                            )))))])])))));
+                loginSignUpButton(context, true, (){login();}),
+                signUpOption(),
+                ])))));
+  }
+
+
+  Row signUpOption(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text('Are you new?',
+            style: TextStyle(color: Colors.black)),
+        GestureDetector(
+          onTap: () {
+            Navigator.pushReplacementNamed(context, '/register');
+          },
+          child: const Text('Create Account',
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        )
+      ],
+    );
+
   }
 }

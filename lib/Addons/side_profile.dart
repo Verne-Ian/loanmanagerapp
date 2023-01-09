@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,15 +8,14 @@ class profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Object? uname;
-    uname = ModalRoute.of(context)!.settings.arguments;
 
     return Drawer(
+      width: 260.0,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-              accountName: Text('$uname\'s Dashboard'),
+              accountName: Text('${FirebaseAuth.instance.currentUser?.email}\'s Dashboard'),
               accountEmail: const Text('you@gmail.com'),
           currentAccountPicture: CircleAvatar(
             child: ClipOval(child: Image.network('http://192.168.43.31/LoanApp/User.php',
