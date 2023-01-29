@@ -9,8 +9,10 @@ class profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    double w = MediaQuery.of(context).size.width;
+
     return Drawer(
-      width: 260.0,
+      width: w * 0.85,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [

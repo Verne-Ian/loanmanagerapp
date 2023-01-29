@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loanmanagerapp/services/dataserver.dart';
 
@@ -18,7 +19,7 @@ class _AdminHomeState extends State<AdminHome> {
   late TextEditingController _fnameController;
   late TextEditingController _lnameController;
   late TextEditingController _phoneController;
-  late TextEditingController _emailController;
+  late TextEditingController _idController;
   late TextEditingController _amountController;
 
 //static const url = 'http://192.168.43.31/LoanApp/actions.php';
@@ -27,7 +28,7 @@ class _AdminHomeState extends State<AdminHome> {
 
   clear(){
     _amountController.text = '';
-    _emailController.text = '';
+    _idController.text = '';
     _phoneController.text = '';
     _lnameController.text = '';
     _fnameController.text ='';
@@ -38,7 +39,7 @@ class _AdminHomeState extends State<AdminHome> {
     _fnameController = TextEditingController();
     _lnameController = TextEditingController();
     _phoneController = TextEditingController();
-    _emailController = TextEditingController();
+    _idController = TextEditingController();
     _amountController = TextEditingController();
     //getData();
 
@@ -46,66 +47,58 @@ class _AdminHomeState extends State<AdminHome> {
 
   @override
   Widget build(BuildContext context) {
-    User_Name = ModalRoute.of(context)!.settings.arguments;
+    //User_Name = FirebaseAuth.instance.currentUser?.email;
 
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
 
     return Scaffold(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.white,
         drawer: const profile(),
         appBar: AppBar(
-          title: Text(
-            '$User_Name\'s Dashboard',
+          title: const Text(
+            'Dashboard',
             style: TextStyle(
-                fontSize: 13.0,
+                fontSize: 18.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.orange[50]
+                color: Colors.black
             ),
           ),
-          backgroundColor: Colors.black87,
-          centerTitle: false,
+          backgroundColor: Colors.yellow,
+          centerTitle: true,
           actions: [
             Row(
               children: [
-                Text(
-                  'Refresh',
-                  style: TextStyle(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.orange[50]
-                  )
-                ),
                 IconButton(onPressed: (){
-                  setState(() {
-                    Service.getLoans();
-                  });
+                  Navigator.pushNamed(context, '');
                 },
-                    icon: const Icon(Icons.refresh_sharp),
-                tooltip: 'Reload',),
+                    icon: const Icon(Icons.account_circle_outlined),
+                tooltip: 'Profile',),
               ])]
         ),
         body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: width * 0.03, right: width * 0.03, top: height * 0.1),
-                child: Container(
-                  child: Column(
-                    children: [
-                      defaultField(
-                          'Enter Amount',
-                          Icons.currency_exchange_sharp,
-                          true, _amountController, 'UGX'),
-
-
-                    ],
+          child: Padding(
+            padding: EdgeInsets.only(left: width * 0.03, right: width * 0.03, top: height * 0.01),
+            child: Column(
+              children: [
+                Card(
+                  color: Colors.black,
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(width * 0.04, height * 0.04, width * 0.04, height * 0.05),
+                    child: Column(
+                      children: [
+                        defaultField('Enter Amount', Icons.currency_exchange_sharp, true, _amountController, 'UGX'),
+                        const SizedBox(height: 10.0,),
+                        defaultField('Enter NIN', Icons.add_card_sharp, false, _idController, ''),
+                        normalButton(context, 'Request', (){})
+                      ],
+                    ),
                   ),
                 ),
-              )
-            ],
+
+              ],
+            ),
           ),
         )
     );

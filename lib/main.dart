@@ -16,9 +16,9 @@ void main() async {
 
 
   runApp(MaterialApp(
-
-    home: const Loader(),
+    initialRoute: '/admin',
     routes: {
+      '/': (context) => const Loader(),
       '/login': (context) => const defLogin(),
       '/register': (context) => const signup(),
       '/admin': (context) => const AdminHome()
@@ -35,10 +35,13 @@ class Loader extends StatefulWidget {
 
 class _LoaderState extends State<Loader> with TickerProviderStateMixin {
 
-  var message = 'Checking Connection....';
+  late String message;
 
   getConn() async{
 
+    setState(() {
+      message = 'Checking Connection....';
+    });
     try {
       String url = "google.com";
       final response = await InternetAddress.lookup(url);
@@ -71,62 +74,70 @@ class _LoaderState extends State<Loader> with TickerProviderStateMixin {
     }else if(message=="Checking connection...."){
       return Container();
     }else if(message == 'Check your connection!'){
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextButton.icon(
-              onPressed: (){
-                getConn();
-              },
-              icon: const Icon(
-                Icons.refresh,
-                color: Colors.green,
-                size: 30.0,
-              ),
-              label: const Text('Reload',
+          Expanded(
+            child: TextButton.icon(
+                onPressed: (){
+                  getConn();
+                },
+                icon: const Icon(
+                  Icons.refresh,
+                  color: Colors.green,
+                  size: 30.0,
+                ),
+                label: const Text('Reload',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black54,
+                        fontSize: 15.0))),
+          ),
+          Expanded(
+            child: TextButton.icon(
+              onPressed: (){SystemNavigator.pop();},
+              label: const Text('Close',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black54,
-                      fontSize: 15.0))),
-          TextButton.icon(
-            onPressed: (){SystemNavigator.pop();},
-            label: const Text('Close',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54,
-                    fontSize: 15.0)),
-            icon: const Icon(Icons.exit_to_app,
-              color: Colors.red,),
+                      fontSize: 15.0)),
+              icon: const Icon(Icons.exit_to_app,
+                color: Colors.red,),
+            ),
           )
         ],
       );
     }else{
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextButton.icon(
-              onPressed: (){
-                getConn();
-              },
-              icon: const Icon(
-                Icons.refresh,
-                color: Colors.green,
-                size: 30.0,
-              ),
-              label: const Text('Reload',
+          Expanded(
+            child: TextButton.icon(
+                onPressed: (){
+                  getConn();
+                },
+                icon: const Icon(
+                  Icons.refresh,
+                  color: Colors.green,
+                  size: 30.0,
+                ),
+                label: const Text('Reload',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black54,
+                        fontSize: 15.0))),
+          ),
+          Expanded(
+            child: TextButton.icon(
+              onPressed: (){SystemNavigator.pop();},
+              label: const Text('Close',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black54,
-                      fontSize: 15.0))),
-          TextButton.icon(
-            onPressed: (){SystemNavigator.pop();},
-            label: const Text('Close',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54,
-                    fontSize: 15.0)),
-            icon: const Icon(Icons.exit_to_app,
-            color: Colors.red,),
+                      fontSize: 15.0)),
+              icon: const Icon(Icons.exit_to_app,
+              color: Colors.red,),
+            ),
           )
         ],
       );
@@ -151,6 +162,7 @@ class _LoaderState extends State<Loader> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.yellow,
         body: Container(
           decoration: const BoxDecoration(gradient: LinearGradient(colors: [
@@ -158,20 +170,20 @@ class _LoaderState extends State<Loader> with TickerProviderStateMixin {
             Colors.black87,
             Colors.yellow
           ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.1,
-                MediaQuery.of(context).size.height * 0.3,
-                MediaQuery.of(context).size.width * 0.1,
-                MediaQuery.of(context).size.height * 0.0),
-            child: SingleChildScrollView(
+          child: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.1,
+                  MediaQuery.of(context).size.height * 0.3,
+                  MediaQuery.of(context).size.width * 0.1,
+                  MediaQuery.of(context).size.height * 0.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                            'NEND LOAN APP',
+                            'NEND LOANS',
                             style: TextStyle(
                                 color: Colors.orange[400],
-                                fontSize: 30.0,
+                                fontSize: 40.0,
                                 fontWeight: FontWeight.bold
                             )),
                         Text(
@@ -194,9 +206,9 @@ class _LoaderState extends State<Loader> with TickerProviderStateMixin {
                               fontSize: 10.0,
                             )),
                         Padding(padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.3,
-                        left: MediaQuery.of(context).size.width * 0.2,
-                        right: MediaQuery.of(context).size.width * 0.2),
+                            top: MediaQuery.of(context).size.height * 0.33,
+                        left: MediaQuery.of(context).size.width * 0.1,
+                        right: MediaQuery.of(context).size.width * 0.1),
                         child: loadDisp()),
                       ]),
             ),

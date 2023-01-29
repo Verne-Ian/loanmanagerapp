@@ -61,54 +61,53 @@ class _defLoginState extends State<defLogin> {
         backgroundColor: Colors.black87,
         centerTitle: true,
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.account_box_outlined,
-                  size: 120.0,
-                ),
-                const Divider(height: 70.0,),
-                const SizedBox(height: 15.0,),
-                TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.account_circle,
-                        size: 15.0,
-                      ),
-                      labelText: "Email",
-                      hintText: "Enter email.",
-                      hintStyle: const TextStyle(
-                          fontSize: 10
-                      ))),
-                const SizedBox(height: 15.0,),
-                TextField(
-                  controller: _passController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.password,
-                        size: 15.0,
-                      ),
-                      labelText: "Password",
-                      hintText: "Enter password",
-                      hintStyle: const TextStyle(
-                          fontSize: 10
-                      ))),
-                loginSignUpButton(context, true, (){login();}),
-                signUpOption(),
-                ])))));
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+              image: DecorationImage(image: AssetImage(
+                'assets/user_logo.png'),))),
+              const Divider(height: 70.0,),
+              const SizedBox(height: 15.0,),
+              TextField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.account_circle,
+                      size: 15.0,
+                    ),
+                    labelText: "Email",
+                    hintText: "Enter email.",
+                    hintStyle: const TextStyle(
+                        fontSize: 10
+                    ))),
+              const SizedBox(height: 15.0,),
+              TextField(
+                controller: _passController,
+                obscureText: true,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.password,
+                      size: 15.0,
+                    ),
+                    labelText: "Password",
+                    hintText: "Enter password",
+                    hintStyle: const TextStyle(
+                        fontSize: 10
+                    ))),
+              loginSignUpButton(context, true, (){login();}),
+              signUpOption(),
+              ]))));
   }
 
 
